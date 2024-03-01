@@ -74,13 +74,14 @@ git clone https://github.com/ArunpaulM/quill.git
 ### Running the application
 
 1. Start the backend server:
-
-   * Run `npm run start:backend` in the project root directory.
+   
+   * Navigate to the `backend` root directory.
+   * Run `npm run start` in the project root directory.
 
 2. Start the frontend development server:
 
    * Navigate to the `frontend` directory.
-   * Run `npm run start:dev` to start the development server.
+   * Run `npm run start` to start the development server.
 
 The application will be accessible at http://localhost:3090 in your browser.
 
