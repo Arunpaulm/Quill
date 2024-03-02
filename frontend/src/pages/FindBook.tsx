@@ -17,7 +17,6 @@ export const FindBook: React.FC<ExploreProps> = ({ bookKeywords }) => {
   /**
    * Fetching list of uploaded books from the server and filtering them by keywords if provided
    */
-
   const { data, loading, error } = useQuery(GET_BOOKS);
   // if (error) {
   //     setBackToHome(true);
@@ -64,7 +63,7 @@ export const FindBook: React.FC<ExploreProps> = ({ bookKeywords }) => {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-12">
+    <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-20">
       <form className="max-w-md mx-auto mt-4">
         <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
           Search
@@ -97,51 +96,56 @@ export const FindBook: React.FC<ExploreProps> = ({ bookKeywords }) => {
           />
           <button
             type="submit"
-            className="text-white absolute end-2.5 bottom-2.5 bg-red-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-blue-800"
+            className="text-white absolute end-2.5 bottom-2.5 bg-slate-500 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-blue-800"
           >
             Search
           </button>
         </div>
       </form>
-      <div className="flex flex-wrap mt-2">
+      <div className="flex flex-wrap mt-12">
         {items &&
           items
             .filter((item) =>
               item.name.toLowerCase().includes(searchTerm.toLowerCase()),
             )
             .map((item, i) => (
-              <div className="w-1/4 mt-5 flex" key={item.id}>
-                <div className="rounded-lg border-0 border-gray-200 max-w-sm bg-white shadow dark:bg-gray-800 dark:border-gray-700 m-2">
+              <div
+                className="flex w-1/4 h-full my-auto align-center justify-center"
+                key={item.id}
+              >
+                <div className="m-1 rounded-lg h-96 border-0 border-gray-200 max-w-sm bg-white shadow grid grid-cols-1 content-between">
                   <a href={item.url}>
                     <img
-                      className="p-8 rounded-t-lg"
+                      className="rounded-t-lg object-cover"
                       src={images[Math.floor(Math.random() * images.length)]}
                       alt={item.name}
                     />
                   </a>
-                  <div className="px-5 pb-5">
+
+                  <div className="px-1 pb-5 mx-3 mb-3">
                     {/* <a href={item.url}> */}
-                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                    <h5 className="text-base font-semibold tracking-tight text-gray-900 dark:text-white">
                       {item.name}
                     </h5>
                     {/* </a> */}
                     <span className="text-3l text-gray-900 dark:text-white">
                       {item.author}
                     </span>
-                    <div className="mt-4">
-                      <a
-                        target="_blank"
-                        onClick={() => {
-                          onButtonClick(item.url, item.name);
-                          window.open(item.url, "_blank");
-                          window.focus();
-                        }}
-                        className="mx-6 text-white bg-red-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        download
-                      >
-                        Download
-                      </a>
-                    </div>
+                  </div>
+
+                  <div className="flex m-4 items-end justify-items-center">
+                    <a
+                      target="_blank"
+                      onClick={() => {
+                        onButtonClick(item.url, item.name);
+                        window.open(item.url, "_blank");
+                        window.focus();
+                      }}
+                      className="w-full text-white bg-indigo-700 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                      download
+                    >
+                      Download
+                    </a>
                   </div>
                 </div>
               </div>

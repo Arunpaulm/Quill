@@ -15,7 +15,7 @@ export const Layout = () => {
             <div>
               <NavBar />
             </div>
-            <div>
+            <div className="mt-5">
               <Outlet />
             </div>
           </div>

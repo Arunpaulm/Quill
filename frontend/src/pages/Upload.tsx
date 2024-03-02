@@ -9,6 +9,7 @@ export const Upload: React.FC = () => {
   const [backToHome, setBackToHome] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [showExplore, setShowExplore] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("userDetails")!)!;
 
   const handleFileInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
     (event.target as HTMLInputElement).value = "";
@@ -24,7 +25,7 @@ export const Upload: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!file) {
-      alert("Please upload a file!");
+      toast.warn("Please upload a file!");
       return;
     } else {
       const formData = new FormData();
@@ -39,21 +40,22 @@ export const Upload: React.FC = () => {
       baseURL.post("/books/upload", formData, authHeaders).then(
         (response) => {
           console.log(response);
-          toast("File uploaded successfully");
-          alert("File uploaded successfully");
+          toast.success("File uploaded successfully");
+          // alert("File uploaded successfully");
           localStorage.removeItem("books");
           setShowExplore(true);
         },
         (error) => {
           console.log(error);
-          alert(error.message);
+          // alert(error.message);
+          toast.error(error.message);
         },
       );
     }
   };
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-12">
+      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-20 mb-10">
         <div className="mx-auto max-w-2xl">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="space-y-12">
@@ -173,12 +175,14 @@ export const Upload: React.FC = () => {
                     </label>
                     <div className="mt-2">
                       <input
+                        value={userInfo.name}
                         type="text"
                         name="author"
                         id="author"
                         autoComplete="author"
                         className="block w-full py-1.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required
+                        disabled
                       />
                     </div>
                   </div>
@@ -216,8 +220,7 @@ export const Upload: React.FC = () => {
                       Description
                     </label>
                     <div className="mt-2">
-                      <input
-                        type="text"
+                      <textarea
                         id="description"
                         name="description"
                         autoComplete="description"
