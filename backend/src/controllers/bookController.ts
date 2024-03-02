@@ -8,7 +8,7 @@ import { Book } from "../models/bookModel"; // Import the UploadedFile model
 // Initialize Firebase Storage
 const storage = new Storage({
   // keyFilename: path.join(__dirname, "path/to/serviceAccountKey.json"), // Provide the path to your service account key
-  keyFilename: path.join(__dirname, "../../config/trusty-matrix-415912-68cd863910cb.json"), // Provide the path to your service account key
+  keyFilename: path.join(__dirname, "../../config/trusty-matrix-415912-e19b848a3c5c.json"), // Provide the path to your service account key
 });
 
 const bucketName = process.env.STORAGE_BUCKET; // Update with your Firebase Storage bucket name
@@ -45,8 +45,10 @@ export const uploadFile = async (req: Request, res: Response) => {
     const newFile = new Book({
       id: uuidv4(), // Unique ID for the file
       name: file.originalname,
+      title: req?.body?.title,
       url: uploadedFile[0].metadata.mediaLink, // Firebase URL of the uploaded file
-      author: req?.body?.author
+      author: req?.body?.author,
+      description: req?.body?.description
     });
 
     // Save the UploadedFile document to MongoDB

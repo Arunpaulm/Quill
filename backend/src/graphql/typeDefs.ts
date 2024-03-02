@@ -4,6 +4,7 @@ export const typeDefs = gql`
   type Book {
     id: ID!
     name: String!
+    title: String!
     url: String!
     author: String!
     description: String
@@ -12,6 +13,7 @@ export const typeDefs = gql`
   input CreateBookInput {
     id: String!
     name: String!
+    title: String!
     url: String!
     author: String!
     description: String

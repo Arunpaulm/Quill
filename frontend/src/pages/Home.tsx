@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 // import Library from "./Library";
 
@@ -7,12 +8,16 @@ export const Home: React.FC = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showExplore, setShowExplore] = useState(false);
   const userDetails = localStorage.getItem("userDetails");
+
   let keywords = useRef<HTMLInputElement>(null).current?.value;
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
   const toggleSignUp = () => {
     if (userDetails !== null) {
-      setShowExplore(true);
+      // setShowExplore(true);
+      navigate("/library");
     } else {
       setShowSignUp(!showSignUp);
     }
@@ -32,7 +37,7 @@ export const Home: React.FC = () => {
             library on the go!
           </p>
 
-          <form className="max-w-md mx-auto mt-4">
+          {/* <form className="max-w-md mx-auto mt-4">
             <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
               Search
             </label>
@@ -70,7 +75,8 @@ export const Home: React.FC = () => {
                 Search
               </button>
             </div>
-          </form>
+          </form> */}
+
           <p className="mt-6 text-lg leading-8 cursor-pointer">
             <a className="text-red-800" onClick={toggleSignUp}>
               <u>Get started</u>

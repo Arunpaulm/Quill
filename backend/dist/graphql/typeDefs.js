@@ -6,6 +6,7 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
   type Book {
     id: ID!
     name: String!
+    title: String!
     url: String!
     author: String!
     description: String
@@ -14,6 +15,7 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
   input CreateBookInput {
     id: String!
     name: String!
+    title: String!
     url: String!
     author: String!
     description: String

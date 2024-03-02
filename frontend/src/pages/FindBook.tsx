@@ -35,7 +35,7 @@ export const FindBook: React.FC<ExploreProps> = ({ bookKeywords }) => {
     return "";
   });
 
-  console.log(items);
+  // console.log(items);
 
   const onButtonClick = async (url: string, name: string) => {
     const a = document.createElement("a");

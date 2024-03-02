@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Welcome from "../components/welcome/welcome";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -15,6 +15,9 @@ export const Upload: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
   const handleFileInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
     (event.target as HTMLInputElement).value = "";
   };
@@ -28,6 +31,7 @@ export const Upload: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     setIsLoading(true);
     if (!file) {
       toast.warn("Please upload a file!");
@@ -35,7 +39,12 @@ export const Upload: React.FC = () => {
     } else {
       const formData = new FormData();
       formData.append("file", file);
-      // formData.append()
+      formData.append("author", userInfo.name);
+      formData.append("title", titleRef.current?.value.toString() || "");
+      formData.append(
+        "description",
+        descriptionRef.current?.value.toString() || "",
+      );
       const authHeaders = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -168,6 +177,7 @@ export const Upload: React.FC = () => {
                         name="title"
                         id="title"
                         autoComplete="title"
+                        ref={titleRef}
                         className="block w-full py-1.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required
                       />
@@ -232,6 +242,7 @@ export const Upload: React.FC = () => {
                         id="description"
                         name="description"
                         autoComplete="description"
+                        ref={descriptionRef}
                         className="block w-full p-6 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
