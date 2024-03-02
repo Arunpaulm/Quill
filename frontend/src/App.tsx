@@ -1,26 +1,39 @@
-import './App.css';
+import "./App.css";
 
-import Home from './components/nav/home';
-import BookUpload from './components/bookUpload/book-upload';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Explore from './components/explore/explore';
-import { client } from './client';
-import { ApolloProvider } from '@apollo/client';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import Home from './components/nav/Home';
+
+import {
+  BrowserRouter as Router,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
+// import Explore from "./pages/FindBook";
+import { client } from "./client";
+import { ApolloProvider } from "@apollo/client";
+import { router } from "./router";
 
 function App() {
   return (
-    // <Router basename="/">
-    //   <Routes>
-    //     <Route path="/" element={<Home/>}/>
-    //     <Route path="/upload" element={<BookUpload/>}/>
-    //   </Routes>
-    // </Router>
-
-    <ApolloProvider client={client}>
-      <div className="App">
-        <Home></Home>
-      </div>
-    </ApolloProvider>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        // newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      ></ToastContainer>
+      <ApolloProvider client={client}>
+        <RouterProvider router={router} />
+      </ApolloProvider>
+    </>
   );
 }
 

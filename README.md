@@ -15,13 +15,16 @@ Project Webpage `https://quill-ca113.web.app`
     * Multer (file upload handling)
     * Passport.js (authentication)
     * Jest (unit testing framework)
+
 * **Frontend:**
     * React.js
     * TypeScript
     * Tailwind CSS
     * Axios
+
 * **Cloud Platform:**
     * Docker (Container image)
+    * Firebase (Hosting)
     * Google Cloud Run (serverless execution)
     * Google Cloud Storage (file storage)
 
