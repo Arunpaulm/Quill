@@ -3,13 +3,17 @@ import Welcome from "../components/welcome/welcome";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { baseURL } from "../components/common/common";
-// import Explore from "./FindBook";
+import { FindBook } from "./FindBook";
+import { Loader } from "../components/loader";
+import { useNavigate } from "react-router-dom";
 
 export const Upload: React.FC = () => {
   const [backToHome, setBackToHome] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [showExplore, setShowExplore] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("userDetails")!)!;
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
     (event.target as HTMLInputElement).value = "";
@@ -24,6 +28,7 @@ export const Upload: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     if (!file) {
       toast.warn("Please upload a file!");
       return;
@@ -43,18 +48,21 @@ export const Upload: React.FC = () => {
           toast.success("File uploaded successfully");
           // alert("File uploaded successfully");
           localStorage.removeItem("books");
-          setShowExplore(true);
+          setIsLoading(false);
+          navigate("/library");
         },
         (error) => {
           console.log(error);
           // alert(error.message);
           toast.error(error.message);
+          setIsLoading(false);
         },
       );
     }
   };
   return (
     <>
+      {isLoading && <Loader></Loader>}
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-20 mb-10">
         <div className="mx-auto max-w-2xl">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -187,7 +195,7 @@ export const Upload: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="sm:col-span-6">
+                  {/* <div className="sm:col-span-6">
                     <label
                       htmlFor="category"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -210,7 +218,7 @@ export const Upload: React.FC = () => {
                         <option>Science Fiction</option>
                       </select>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="col-span-full">
                     <label
