@@ -8,7 +8,7 @@ import { Book } from "../models/bookModel"; // Import the UploadedFile model
 // Initialize Firebase Storage
 const storage = new Storage({
   // keyFilename: path.join(__dirname, "path/to/serviceAccountKey.json"), // Provide the path to your service account key
-  keyFilename: path.join(__dirname, "../../config/trusty-matrix-415912-e19b848a3c5c.json"), // Provide the path to your service account key
+  keyFilename: path.join(__dirname, "../../config/trusty-matrix-415912-1569b01bf45e.json"), // Provide the path to your service account key
 });
 
 const bucketName = process.env.STORAGE_BUCKET; // Update with your Firebase Storage bucket name
@@ -25,15 +25,18 @@ export const uploadFile = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    console.log(req.body.author)
-
     const file = req.file;
+
+    if (file.mimetype !== "application/pdf") {
+      return res.status(400).json({ error: "Invalid file type uploaded" });
+    }
+
     const fileName = `${uuidv4()}-${file.originalname}`;
     // console.log(bucketName)
 
     // Upload file to Firebase Storage
     const uploadedFile = await storage.bucket(bucketName).upload(file.path, {
-      destination: fileName,
+      destination: fileName.replace(/\ /gm, "-"),
       metadata: {
         contentType: file.mimetype,
       },
@@ -48,6 +51,7 @@ export const uploadFile = async (req: Request, res: Response) => {
       title: req?.body?.title,
       url: uploadedFile[0].metadata.mediaLink, // Firebase URL of the uploaded file
       author: req?.body?.author,
+      uploadedBy: req?.body?.uploadedBy,
       description: req?.body?.description
     });
 

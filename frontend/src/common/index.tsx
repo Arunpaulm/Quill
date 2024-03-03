@@ -1,25 +1,26 @@
 import { gql } from "@apollo/client";
 import axios from "axios";
-import React from "react";
 
 export const GET_BOOKS = gql`
-  query GET_BOOKS {
+  query {
     books {
       id
       name
       url
+      title
+      author
+      uploadedBy
       description
     }
   }
 `;
 
 export const baseURL = axios.create({
-  baseURL: "https://quill-ca113-sd7tjm4hyq-nw.a.run.app"
-})
+  baseURL: process.env.REACT_APP_BASEURL,
+});
 
 export const options = {
   headers: {
-    'Content-Type': 'application/json'
-  }
-}
-
+    "Content-Type": "application/json",
+  },
+};

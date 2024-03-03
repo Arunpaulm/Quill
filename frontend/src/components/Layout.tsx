@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { NavBar } from "../components/nav/Navbar";
+import { NavBar } from "./Navbar";
 
 export const Layout = () => {
   const [userDetails, setUserDetails] = useState<any>(
@@ -15,7 +15,7 @@ export const Layout = () => {
             <div>
               <NavBar />
             </div>
-            <div className="mt-5">
+            <div className="">
               <Outlet />
             </div>
           </div>

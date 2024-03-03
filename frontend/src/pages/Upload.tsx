@@ -1,9 +1,6 @@
 import React, { useRef, useState } from "react";
-import Welcome from "../components/welcome/welcome";
-import axios from "axios";
 import { toast } from "react-toastify";
-import { baseURL } from "../components/common/common";
-import { FindBook } from "./FindBook";
+import { baseURL } from "../common";
 import { Loader } from "../components/loader";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +11,10 @@ export const Upload: React.FC = () => {
   const userInfo = JSON.parse(localStorage.getItem("userDetails")!)!;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
+  if (userInfo.type !== "Author") {
+    navigate(-1);
+  }
 
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -40,6 +41,7 @@ export const Upload: React.FC = () => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("author", userInfo.name);
+      formData.append("uploadedBy", userInfo.username);
       formData.append("title", titleRef.current?.value.toString() || "");
       formData.append(
         "description",
@@ -55,14 +57,12 @@ export const Upload: React.FC = () => {
         (response) => {
           console.log(response);
           toast.success("File uploaded successfully");
-          // alert("File uploaded successfully");
           localStorage.removeItem("books");
           setIsLoading(false);
           navigate("/library");
         },
         (error) => {
           console.log(error);
-          // alert(error.message);
           toast.error(error.message);
           setIsLoading(false);
         },
@@ -72,7 +72,7 @@ export const Upload: React.FC = () => {
   return (
     <>
       {isLoading && <Loader></Loader>}
-      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-20 mb-10">
+      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-16 mb-10">
         <div className="mx-auto max-w-2xl">
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="space-y-12">
@@ -146,6 +146,7 @@ export const Upload: React.FC = () => {
                         id="dropzone-file"
                         type="file"
                         className="hidden"
+                        accept="application/pdf"
                         onClick={handleFileInputClick}
                         onChange={handleFileChange}
                       />
@@ -243,7 +244,7 @@ export const Upload: React.FC = () => {
                         name="description"
                         autoComplete="description"
                         ref={descriptionRef}
-                        className="block w-full p-6 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block w-full text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
                   </div>

@@ -1,10 +1,7 @@
-import axios from "axios";
-import { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-// import Explore from "./FindBook";
-import Welcome from "../components/welcome/welcome";
-import { baseURL, options } from "../components/common/common";
+import { baseURL, options } from "../common";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../components/loader";
 
@@ -15,6 +12,13 @@ export const Login: React.FC = () => {
   const passRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const userDetails = JSON.parse(localStorage.getItem("userDetails")!);
+    if (userDetails?.username) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

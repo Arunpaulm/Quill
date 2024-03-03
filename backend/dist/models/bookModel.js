@@ -9,6 +9,7 @@ const BookSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     url: { type: String, required: true },
     description: { type: String },
+    uploadedBy: { type: String },
     author: { type: String },
 });
 // Define and export the UploadedFile model

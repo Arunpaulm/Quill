@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import Welcome from "../components/welcome/welcome";
 
 export const Profile: React.FC = () => {
   const userInfo = JSON.parse(localStorage.getItem("userDetails")!)!;
 
   return (
-    <div className="m-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-20">
+    <div className="m-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-10 lg:px-8 bg-white border-2 rounded-lg mt-16">
       <div className="mt-6 border-gray-100 mx-10 grid items-center justify-center">
         <h1 className="text-2xl font-bold leading-7 text-gray-900 mx-auto">
           User Information

@@ -7,23 +7,25 @@ export const typeDefs = gql`
     title: String!
     url: String!
     author: String!
+    uploadedBy: String!
     description: String
   }
 
   input CreateBookInput {
-    id: String!
+    id: ID!
     name: String!
     title: String!
     url: String!
     author: String!
+    uploadedBy: String!
     description: String
   }
 
   input UpdateBookInput {
-    id: ID!
+    id: String
     name: String
+    title: String
     url: String
-    author: String
     description: String
   }
 

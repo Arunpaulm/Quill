@@ -7,6 +7,7 @@ interface IBookFile extends Document {
   title: string; // Title of the uploaded file
   url: string; // Firebase URL of the uploaded file
   description: string; // Description about the book
+  uploadedBy: string; // User uploaded the book
   author: string; // book author
 }
 
@@ -17,6 +18,7 @@ const BookSchema = new Schema<IBookFile>({
   title: { type: String, required: true },
   url: { type: String, required: true },
   description: { type: String },
+  uploadedBy: { type: String },
   author: { type: String },
 });
 

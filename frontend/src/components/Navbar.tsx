@@ -4,7 +4,8 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Logo from "../../assets/logo/logo512.png";
+import Logo from "../assets/logo/logo512.png";
+import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "/home" },
@@ -15,20 +16,20 @@ const navigation = [
 ];
 
 export const NavBar: React.FC = () => {
+  const userInfo = JSON.parse(localStorage.getItem("userDetails")!)!;
+
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [menuItem, setMenuItem] = useState<number>(0);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50">
       <nav
-        className="flex items-center justify-between p-4 lg:px-8"
+        className="flex items-center justify-between p-4 lg:px-8 bg-white"
         aria-label="Global"
       >
-        <div className="flex lg:flex-1">
-          <a href="#" className="m-1.5 p-1.5" onClick={() => setMenuItem(0)}>
-            <img className="h-8 w-auto" src={Logo} alt="" />
-          </a>
+        <div className="flex lg:flex-1 m-1.5 p-1.5">
+          <img className="h-8 w-auto" src={Logo} alt="" />
         </div>
         <div className="flex lg:hidden">
           <button
@@ -41,18 +42,28 @@ export const NavBar: React.FC = () => {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item, index) => (
-            <a
-              key={item.name}
-              href={item.href}
-              onClick={() => setMenuItem(index)}
-              className="py-2 px-4 rounded-lg text-sm font-semibold leading-6 hover:bg-indigo-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-white-100 dark:hover:bg-red-700 dark:focus:ring-blue-800"
-            >
-              {item.name}
-            </a>
-          ))}
+          {navigation.map((item, index) => {
+            if (item.name === "Upload" && userInfo.type !== "Author") return "";
+            return (
+              <Link
+                className="py-2 px-4 rounded-lg text-sm font-semibold leading-6 hover:bg-indigo-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-white-100 dark:hover:bg-red-700 dark:focus:ring-blue-800"
+                key={item.name}
+                to={item.href}
+              >
+                {item.name}
+              </Link>
+              // <a
+              //   key={item.name}
+              //   href={item.href}
+              //   onClick={() => setMenuItem(index)}
+              //   className="py-2 px-4 rounded-lg text-sm font-semibold leading-6 hover:bg-indigo-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-white-100 dark:hover:bg-red-700 dark:focus:ring-blue-800"
+              // >
+              //   {item.name}
+              // </a>
+            );
+          })}
         </div>
-        <div className="lg:flex lg:flex-1 lg:justify-end">
+        <div className="lg:flex lg:flex-1 items-center lg:justify-end">
           <button
             type="submit"
             onClick={() => {

@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { baseURL, options } from "../components/common/common";
-import Welcome from "../components/welcome/welcome";
-import { Login } from "./Login";
+import { baseURL, options } from "../common";
+
 import { Loader } from "../components/loader";
 
 import Logo from "../assets/logo/logo512.png";
@@ -25,6 +24,13 @@ const SignUp: React.FC = () => {
   const confirmpasswordRef = useRef<HTMLInputElement>(null);
   const roleRef = useRef<HTMLSelectElement>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const userDetails = JSON.parse(localStorage.getItem("userDetails")!);
+    if (userDetails?.username) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
